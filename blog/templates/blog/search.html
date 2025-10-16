@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Buscar{% endblock %}
+{% block content %}
+<h1>Búsqueda de Posts</h1>
+<form method="get" class="form search-form">
+  <input type="text" name="q" value="{{ query }}" placeholder="Palabra clave…" autofocus>
+  <button type="submit">Buscar</button>
+</form>
+
+{% if query and results %}
+  <h3>Resultados para "{{ query }}"</h3>
+  <ul class="post-list">
+    {% for p in results %}
+      <li class="post-item">
+        <h4>{{ p.title }}</h4>
+        <div class="meta">Autor: {{ p.author }} · Categoría: {{ p.category|default:'—' }} · {{ p.created_at|date:'d/m/Y H:i' }}</div>
+        <p>{{ p.content|truncatechars:200 }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+{% elif query %}
+  <p>No se encontraron resultados.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Inicio — Blog{% endblock %}
+{% block content %}
+<h1>Posts recientes</h1>
+
+<form action="{% url 'blog:search_posts' %}" method="get" class="search-inline">
+  <input type="text" name="q" placeholder="Buscar posts…">
+  <button type="submit">Buscar</button>
+</form>
+
+{% if posts %}
+  <ul class="post-list">
+    {% for p in posts %}
+      <li class="post-item">
+        <h3>{{ p.title }}</h3>
+        <div class="meta">Autor: {{ p.author }} · Categoría: {{ p.category|default:'—' }} · {{ p.created_at|date:'d/m/Y H:i' }}</div>
+        <p>{{ p.content|truncatechars:200 }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No hay posts todavía.</p>
+{% endif %}
+{% endblock %}
