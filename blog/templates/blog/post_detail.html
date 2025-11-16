@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block content %}
+
+<article class="post-detail">
+
+    <h1>{{ object.title }}</h1>
+
+    {% if object.subtitle %}
+        <h2>{{ object.subtitle }}</h2>
+    {% endif %}
+
+    <div class="meta">
+        Autor: {{ object.author }}
+        · Categoría: {{ object.category|default:"—" }}
+        · {{ object.created_at|date:"d/m/Y H:i" }}
+    </div>
+
+    {% if object.image %}
+        <img src="{{ object.image.url }}" alt="{{ object.title }}" style="max-width:400px; border-radius:8px;">
+    {% endif %}
+
+    <div class="post-content">
+        {{ object.content|safe }}
+    </div>
+
+    <br>
+
+    <a href="{% url 'blog:list' %}" class="btn-link">← Volver al listado</a>
+
+    {% if user.is_authenticated %}
+        <br><br>
+        <a href="{% url 'blog:update' object.pk %}" class="btn-link">Editar</a>
+        <a href="{% url 'blog:delete' object.pk %}" class="btn-link">Borrar</a>
+    {% endif %}
+
+</article>
+
+{% endblock %}

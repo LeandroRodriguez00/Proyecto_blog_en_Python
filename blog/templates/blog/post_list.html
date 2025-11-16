@@ -1,6 +1,7 @@
-{% extends 'base.html' %}
-{% block title %}Inicio — Blog{% endblock %}
+{% extends "base.html" %}
+{% block title %}Pages{% endblock %}
 {% block content %}
+
 <h1>Posts recientes</h1>
 
 <form action="{% url 'blog:search_posts' %}" method="get" class="search-inline">
@@ -12,13 +13,34 @@
   <ul class="post-list">
     {% for p in posts %}
       <li class="post-item">
+
         <h3>{{ p.title }}</h3>
-        <div class="meta">Autor: {{ p.author }} · Categoría: {{ p.category|default:'—' }} · {{ p.created_at|date:'d/m/Y H:i' }}</div>
-        <p>{{ p.content|truncatechars:200 }}</p>
+
+        {% if p.subtitle %}
+          <h4>{{ p.subtitle }}</h4>
+        {% endif %}
+
+        <div class="meta">
+          Autor: {{ p.author }}
+          · Categoría: {{ p.category|default:"—" }}
+          · {{ p.created_at|date:"d/m/Y H:i" }}
+        </div>
+
+        {% if p.image %}
+          <img src="{{ p.image.url }}" alt="{{ p.title }}" style="max-width:300px; border-radius:8px;">
+        {% endif %}
+
+        <p>{{ p.content|striptags|truncatechars:200 }}</p>
+
+
+        <a href="{% url 'blog:detail' p.pk %}" class="btn-link">Leer más</a>
+
       </li>
     {% endfor %}
   </ul>
+
 {% else %}
-  <p>No hay posts todavía.</p>
+  <p>No hay páginas aún.</p>
 {% endif %}
+
 {% endblock %}

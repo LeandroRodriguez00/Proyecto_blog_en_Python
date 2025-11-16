@@ -14,4 +14,4 @@ class CategoryForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["title", "content", "author", "category"]
+        fields = ["title", "subtitle", "content", "image", "author", "category"]

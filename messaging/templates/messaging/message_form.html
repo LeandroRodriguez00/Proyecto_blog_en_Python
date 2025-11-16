@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Nuevo mensaje{% endblock %}
+
+{% block content %}
+<h1>Nuevo mensaje</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="search-button" type="submit">Enviar</button>
+</form>
+
+<p>
+  <a href="{% url 'messaging:inbox' %}" class="btn-link">Volver a bandeja de entrada</a>
+</p>
+{% endblock %}

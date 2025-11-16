@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Bandeja de entrada{% endblock %}
+
+{% block content %}
+<h1>Bandeja de entrada</h1>
+
+<p><a class="btn-link" href="{% url 'messaging:new_message' %}">Nuevo mensaje</a></p>
+<p><a class="btn-link" href="{% url 'messaging:sent' %}">Ver enviados</a></p>
+
+{% if messages %}
+  <ul class="post-list">
+    {% for m in messages %}
+      <li class="post-item">
+        <strong>{% if not m.is_read %}[Nuevo] {% endif %}{{ m.subject }}</strong><br>
+        De: {{ m.sender.username }} · {{ m.created_at|date:"d/m/Y H:i" }}<br>
+        <a href="{% url 'messaging:detail' m.pk %}">Ver mensaje</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No tenés mensajes en tu bandeja de entrada.</p>
+{% endif %}
+{% endblock %}

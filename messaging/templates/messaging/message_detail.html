@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Mensaje{% endblock %}
+
+{% block content %}
+<h1>{{ message.subject }}</h1>
+
+<p><strong>De:</strong> {{ message.sender.username }}</p>
+<p><strong>Para:</strong> {{ message.receiver.username }}</p>
+<p><strong>Fecha:</strong> {{ message.created_at|date:"d/m/Y H:i" }}</p>
+
+<hr>
+
+<p>{{ message.body|linebreaks }}</p>
+
+<hr>
+
+<p>
+  <a href="{% url 'messaging:inbox' %}" class="btn-link">Volver a bandeja de entrada</a>
+  <a href="{% url 'messaging:sent' %}" class="btn-link">Ver enviados</a>
+
+  {% if request.user == message.receiver %}
+    · <a href="{% url 'messaging:reply' message.pk %}" class="btn-link">Responder</a>
+  {% endif %}
+
+  {% if request.user == message.sender or request.user == message.receiver %}
+    · <a href="{% url 'messaging:delete' message.pk %}" class="btn-link" style="color:#ff8585;">
+        Eliminar
+      </a>
+  {% endif %}
+</p>
+
+
+{% endblock %}

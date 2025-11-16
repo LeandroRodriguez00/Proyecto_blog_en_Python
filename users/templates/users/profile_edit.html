@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Editar perfil{% endblock %}
+
+{% block content %}
+<h1>Editar mi perfil</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <p>
+        <label>Nombre:</label><br>
+        <input type="text" name="first_name" value="{{ request.user.first_name }}">
+    </p>
+
+    <p>
+        <label>Apellido:</label><br>
+        <input type="text" name="last_name" value="{{ request.user.last_name }}">
+    </p>
+
+    <p>
+        <label>Email:</label><br>
+        <input type="email" name="email" value="{{ request.user.email }}">
+    </p>
+
+    <hr>
+
+    {{ form.as_p }}
+
+    <button class="search-button" type="submit">Guardar</button>
+</form>
+{% endblock %}

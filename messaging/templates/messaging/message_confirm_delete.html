@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Eliminar mensaje{% endblock %}
+
+{% block content %}
+<h1>Eliminar mensaje</h1>
+
+<p>¿Estás seguro que querés borrar este mensaje?</p>
+
+<p><strong>Asunto:</strong> {{ message.subject }}</p>
+<p><strong>De:</strong> {{ message.sender.username }}</p>
+<p><strong>Para:</strong> {{ message.receiver.username }}</p>
+<p><strong>Fecha:</strong> {{ message.created_at|date:"d/m/Y H:i" }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button class="search-button" type="submit">Sí, borrar</button>
+</form>
+
+<br>
+<a href="{% url 'messaging:detail' message.pk %}" class="btn-link">Cancelar</a>
+{% endblock %}
